@@ -2,6 +2,7 @@ import datetime
 import random
 import webbrowser
 import time
+import os
 import playsound
 from gtts import gTTS
 import speech_recognition as sr
@@ -17,6 +18,8 @@ class voice_assistant:
         audio_file = 'audio-' + str(random.randint(1, 1000000))
         tts.save(audio_file)
         playsound.playsound(audio_file)
+        os.remove(audio_file)
+
 
     def record_voice(self, text=False):
         if text:
