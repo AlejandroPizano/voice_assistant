@@ -8,6 +8,8 @@ from gtts import gTTS
 import speech_recognition as sr
 
 recon = sr.Recognizer()
+
+
 class voice_assistant:
     def __init__(self, user_name='', name='Jarvis'):
         self.name = name
