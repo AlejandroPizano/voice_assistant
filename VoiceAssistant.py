@@ -56,9 +56,7 @@ class voiceAssistant:
             if self.user_name == '':
                 self.user_name = self.record_voice('What is your name?')
             self.sofia_speak('Your name is' + self.user_name)
-        elif 'exit' in audio:
-            self.sofia_speak('Ok, see you later')
-            exit()
+
 
         else:
             self.sofia_speak('Try again')
@@ -68,5 +66,17 @@ time.sleep(1)
 assistant = voiceAssistant()
 assistant.sofia_speak("Hi, what can I help you with?")
 while 1:
-    assistant.respond(assistant.record_voice())
+    speech = assistant.record_voice()
+    if speech == 'exit' or speech == 'end' or speech == 'bye':
+        ans = random.randint(0,3)
+        if ans == 0:
+            assistant.sofia_speak('Bye')
+        if ans == 1:
+            assistant.sofia_speak('See you later')
+        if ans == 2:
+            assistant.sofia_speak('Until next time')
+        if ans == 3:
+            assistant.sofia_speak('Fuck you buddy')
+        break
+    assistant.respond(speech)
     assistant.sofia_speak('Ready for next command')
