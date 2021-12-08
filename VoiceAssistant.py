@@ -8,18 +8,20 @@ from gtts import gTTS
 import speech_recognition as sr
 
 recon = sr.Recognizer()
-class voice_assistant:
+
+
+class voiceAssistant:
     def __init__(self, user_name='', name='Jarvis'):
         self.name = name
         self.user_name = user_name
 
-    def sofia_speak(self, audio_string):
+    @staticmethod
+    def sofia_speak(audio_string):
         tts = gTTS(text=audio_string, lang='en')
-        audio_file = 'audio-' + str(random.randint(1, 1000000))
+        audio_file = 'audio-' + str(random.randint(1, 1000000)) + '.mp3'
         tts.save(audio_file)
         playsound.playsound(audio_file)
         os.remove(audio_file)
-
 
     def record_voice(self, text=False):
         if text:
@@ -29,8 +31,7 @@ class voice_assistant:
             try:
                 audio = recon.recognize_google(source)
             except sr.UnknownValueError:
-                audio = ''
-                self.sofia_speak('Sorry I didn´t get that')
+                audio = None
             return audio
 
     def respond(self, audio):
@@ -39,7 +40,7 @@ class voice_assistant:
         elif 'date' in audio:
             self.sofia_speak(datetime.date.today())
         elif 'what is your name' == audio:
-            user= voice_assistant()
+            user = voiceAssistant()
             self.sofia_speak(user.name)
         elif 'search' in audio:
             search = self.record_voice('What do you want to search?')
@@ -58,13 +59,14 @@ class voice_assistant:
         elif 'exit' in audio:
             self.sofia_speak('Ok, see you later')
             exit()
+
         else:
             self.sofia_speak('Try again')
 
 
 time.sleep(1)
-assistant = voice_assistant()
+assistant = voiceAssistant()
 assistant.sofia_speak("Hi, what can I help you with?")
 while 1:
     assistant.respond(assistant.record_voice())
-    assistant.sofia_speak('Ready for next comand')
+    assistant.sofia_speak('Ready for next command')
